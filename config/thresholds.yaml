@@ -1,0 +1,110 @@
+# Analysis Thresholds Configuration
+#
+# IMPORTANT: These are TUNABLE DEFAULTS, not industry standards.
+# Adjust based on your specific drone platform and requirements.
+
+# Vibration Analysis Thresholds
+vibration:
+  # RMS vibration threshold (m/s²)
+  # Default: 15.0
+  # Rationale: Based on typical consumer multirotor performance.
+  #   - < 10 m/s²: Excellent, very smooth flight
+  #   - 10-15 m/s²: Good, normal operation
+  #   - 15-25 m/s²: Elevated, monitor for mechanical issues
+  #   - > 25 m/s²: High, likely indicates problem (loose props, bad bearings, imbalance)
+  # Adjust based on:
+  #   - Drone size (larger drones typically have lower vibration)
+  #   - Motor/prop configuration
+  #   - Frame stiffness
+  rms_threshold_ms2: 15.0
+
+  # Accelerometer clipping threshold (count)
+  # Default: 10
+  # Rationale: A few clips during aggressive maneuvers are normal.
+  #   Multiple clips indicate sensor saturation (vibration too high for sensor range).
+  # Adjust based on:
+  #   - Flight style (acro vs smooth)
+  #   - Sensor range (±8g, ±16g, etc.)
+  clip_threshold_count: 10
+
+# Battery Analysis Thresholds
+battery:
+  # Minimum safe voltage per cell (V)
+  # Default: 3.5
+  # Rationale: LiPo cells should not discharge below 3.5V under load.
+  #   - 4.2V: Fully charged
+  #   - 3.7V: Nominal
+  #   - 3.5V: Low warning
+  #   - 3.0V: Critical damage threshold
+  # Adjust based on:
+  #   - Battery chemistry (LiPo, Li-ion, LiFe have different curves)
+  #   - Manufacturer specifications
+  min_voltage_per_cell: 3.5
+
+  # Maximum voltage sag under load (V)
+  # Default: 0.5
+  # Rationale: Large voltage drops indicate high internal resistance.
+  #   Could mean aged battery or excessive current draw.
+  # Adjust based on:
+  #   - Battery C-rating
+  #   - Expected current draw
+  max_voltage_sag: 0.5
+
+# Motor Analysis Thresholds
+motor:
+  # Motor output saturation threshold (%)
+  # Default: 95.0
+  # Rationale: Motors at >95% output have limited control authority.
+  #   Sustained saturation means underpowered or overweight.
+  # Adjust based on:
+  #   - Flight style (racing vs cinematography)
+  #   - Safety margins desired
+  saturation_threshold_pct: 95.0
+
+  # Motor output imbalance threshold (%)
+  # Default: 20.0
+  # Rationale: Large differences between motors indicate:
+  #   - CG offset
+  #   - Damaged motor/prop
+  #   - Asymmetric drag
+  # Adjust based on:
+  #   - Frame symmetry
+  #   - Payload balance requirements
+  imbalance_threshold_pct: 20.0
+
+# Attitude Tracking Thresholds
+attitude:
+  # RMS tracking error threshold (degrees)
+  # Default: 5.0
+  # Rationale: Large tracking errors indicate:
+  #   - Poor PID tuning
+  #   - Insufficient control authority
+  #   - External disturbances (wind)
+  # Adjust based on:
+  #   - Performance requirements
+  #   - Environmental conditions
+  rms_error_threshold_deg: 5.0
+
+  # Maximum tracking error (degrees)
+  # Default: 15.0
+  # Rationale: Transient spikes are OK, but sustained large errors are not.
+  # Adjust based on:
+  #   - Acceptable deviation from setpoint
+  #   - Application requirements (survey vs sport)
+  max_error_threshold_deg: 15.0
+
+# Notes on threshold selection:
+#
+# 1. Start with defaults and observe
+# 2. Collect data from multiple flights
+# 3. Adjust based on your platform's normal behavior
+# 4. Consider environmental factors (wind, temperature)
+# 5. Different missions may need different thresholds
+# 6. Document why you changed a threshold
+#
+# Example workflow:
+# - Fly 10 "good" flights
+# - Note the typical values for each metric
+# - Set thresholds at ~1.5x typical for warnings
+# - Set critical thresholds at ~2x typical
+# - Refine based on false positive/negative rate

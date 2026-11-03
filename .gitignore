@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+.coverage
+htmlcov/
+
+# IDEs
+.vs/
+.idea/
+
+# Flight data and generated analysis artifacts
+*.ulg
+sample_logs/topics_output.txt
+*_report.html
+vibration_analysis.png
+vibration_test_output.txt
+
+# Local logs and secrets
+*.log
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
